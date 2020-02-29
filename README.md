@@ -1,5 +1,7 @@
 # README
 
+_Exposes various API endpoints using a service-oriented architecture that allows users to see the current weather as well as the forecasted weather at the destination._
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
