@@ -1,9 +1,13 @@
 class GoogleMapsService
-  def coordinates(location)
+  def self.geocode(location)
+    new.geocode(location)
+  end
+
+  def geocode(location)
     json = get_json('/maps/api/geocode/json', {
       address: location
       })
-    json[0][:geometry][:location]
+    json[0]
   end
 
   private

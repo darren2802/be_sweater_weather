@@ -1,7 +1,7 @@
 class Api::V1::WeatherController < ApplicationController
   def show
-    require "pry"; binding.pry
-    location = params[:id]
-    render json WeatherSerializer.new(WeatherSearch.new(location))
+    location = params[:location]
+    weather_search = WeatherSearch.new(location)
+    render json: WeatherSerializer.new(weather_search.weather_info)
   end
 end

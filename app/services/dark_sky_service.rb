@@ -1,8 +1,12 @@
 class DarkSkyService
+  def self.weather_info(coordinates)
+    new.weather_info(coordinates)
+  end
+
   def weather_info(coordinates)
     lat = coordinates[:lat]
     lng = coordinates[:lng]
-    
+
     json = get_json(lat, lng)
   end
 
