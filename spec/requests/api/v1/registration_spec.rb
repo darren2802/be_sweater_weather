@@ -13,6 +13,7 @@ describe 'User can register spec' do
 
     result = JSON.parse(response.body, symbolize_names: true)
 
-require "pry"; binding.pry
+    expect(result.keys).to eq([:data])
+    expect(result[:data][:attributes].keys).to eq([:api_key])
   end
 end

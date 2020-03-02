@@ -1,14 +1,16 @@
 class Api::V1::UsersController < ApplicationController
   def create
-    return render json: UserSerializer.new(user) unless params[:password] == params[:password_confirmation]
+    return render json: { message: 'passwords do not match' }, status: 400 unless params[:password] == params[:password_confirmation]
 
     params[:api_key] = generate_api_key
     user = User.new(user_params)
 
     if user.save
-      render json: UserSerializer.new(user)
+      render json: UserSerializer.new(user), status: 201
     else
-      render json: UserSerializer.new(user)
+      render json: {
+
+      }
     end
 
   end
