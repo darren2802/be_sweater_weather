@@ -2,6 +2,7 @@ class MunchiesSearch
   def initialize(start_loc, end_loc, category)
     @start_loc = start_loc
     @end_loc = end_loc
+    @end_loc_formatted = ''
     @category = category
     @travel_seconds = 0
     @arrival_time_unix = 0
@@ -15,6 +16,7 @@ class MunchiesSearch
 
   def destination_forecast
     dest_geocode = GoogleMapsService.geocode(@end_loc)
+    format_end_loc(dest_geocode)
     coordinates = dest_geocode[:geometry][:location]
     @arrival_time_unix = Time.now.to_i + @travel_seconds
     weather_data = DarkSkyService.time_machine_forecast(coordinates, @arrival_time_unix)
@@ -34,6 +36,18 @@ class MunchiesSearch
   end
 
   def information
-    Munchie.new(@end_loc, travel_time, destination_forecast, restaurant)
+    Munchie.new(travel_time, destination_forecast, restaurant, @end_loc_formatted)
+  end
+
+  def format_end_loc(geocode)
+    city = ''
+    state = ''
+
+    geocode[:address_components].each do |add|
+      city = add[:short_name] if add[:types] == ["locality", "political"]
+      state = add[:short_name] if add[:types] == ["administrative_area_level_1", "political"]
+    end
+
+    @end_loc_formatted = city + ', ' + state
   end
 end
