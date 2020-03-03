@@ -7,6 +7,6 @@ class Api::V1::RoadTripsController < ApplicationController
     return render json: { message: 'unauthorized' }, status: 401 unless User.find_by(api_key: api_key)
 
     road_trip_search = RoadTripSearch.new(origin, destination)
-    render json: RoadTripSerializer.new(road_trip_search.information)
+    render json: RoadTripSerializer.new(road_trip_search.information), status: 202
   end
 end

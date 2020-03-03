@@ -19,5 +19,16 @@ describe 'User with api key can plan road trip', :vcr do
                                 "destination": "Pueblo,CO",
                                 "api_key": api_key
                               }
+
+    expect(response).to be_successful
+    expect(response.status).to eq(202)
+
+    result = JSON.parse(response.body, symbolize_names: true)
+
+    expect(result.keys).to eq([:data])
+    expect(result[:data].keys).to eq([:id, :type, :attributes])
+    expect(result[:data][:id]).to be_nil
+    expect(result[:data][:attributes].keys).to eq([:origin, :destination, :travel_time, :arrival_forecast])
+    expect(result[:data][:attributes][:arrival_forecast].keys).to eq([:temperature, :description])
   end
 end

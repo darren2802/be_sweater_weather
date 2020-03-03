@@ -7,7 +7,7 @@ class GoogleMapsService
     json = get_json('/maps/api/geocode/json', {
       address: location
       })
-    json[0]
+    json[:results][0]
   end
 
   def self.directions(origin, destination)
@@ -28,7 +28,7 @@ class GoogleMapsService
         req.params = req.params.merge(parameters)
       end
 
-      JSON.parse(response.body, symbolize_names: true)[:results]
+      JSON.parse(response.body, symbolize_names: true)
     end
 
     def conn
