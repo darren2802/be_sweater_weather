@@ -10,6 +10,17 @@ class GoogleMapsService
     json[0]
   end
 
+  def self.directions(origin, destination)
+    new.directions(origin, destination)
+  end
+
+  def directions(origin, destination)
+    json = get_json('/maps/api/directions/json', {
+      origin: origin,
+      destination: destination
+      })
+  end
+
   private
 
     def get_json(uri, parameters)
