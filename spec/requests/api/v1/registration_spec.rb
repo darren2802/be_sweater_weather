@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User can register spec' do
+describe 'User can register' do
   it 'creates a user and returns an API key for a successful registration' do
     post '/api/v1/users', :params => {
                               "email": "whatever@example.com",
