@@ -29,7 +29,8 @@ class WeatherSearch
       state: geocode_state(geocode[:address_components]),
       country: geocode_country(geocode[:address_components]),
       time: Time.now.strftime("%I:%M %p"),
-      date: Time.now.strftime("%m/%d")
+      date: Time.now.strftime("%m/%d"),
+      time_short: Time.now.strftime("%e %p")
     }
   end
 
