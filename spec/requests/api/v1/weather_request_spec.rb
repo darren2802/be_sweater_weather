@@ -19,7 +19,8 @@ describe 'Weather API based on JSON 1.0 spec' do
                                           :state,
                                           :country,
                                           :time,
-                                          :date])
+                                          :date,
+                                          :time_short])
     end
 
     it 'sends details of current day weather' do
