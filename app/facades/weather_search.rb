@@ -67,7 +67,7 @@ class WeatherSearch
 
   def forecast(data_daily)
     forecast_hash = Hash.new
-  require "pry"; binding.pry
+
     7.times do |i|
       hash_key = ('day_' + (i + 1).to_s).to_sym
       forecast_hash[hash_key] = {
