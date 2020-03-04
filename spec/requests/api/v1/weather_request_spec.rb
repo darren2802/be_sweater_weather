@@ -57,7 +57,8 @@ describe 'Weather API based on JSON 1.0 spec' do
                                             :temp_avg,
                                             :temp_low,
                                             :temp_high,
-                                            :humidity])      
+                                            :humidity,
+                                            :weekday])
     end
   end
 end
