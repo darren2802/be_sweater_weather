@@ -1,5 +1,6 @@
 class CurrentWeatherDetail
-  attr_reader :icon,
+  attr_reader :id,
+              :icon,
               :description,
               :today,
               :tonight,
@@ -10,6 +11,7 @@ class CurrentWeatherDetail
               :uv_category
 
   def initialize(data_current, data_daily)
+    @id = nil
     @icon = data_current[:icon]
     @description = data_current[:summary]
     @today = data_daily[:data][0][:summary]

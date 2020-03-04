@@ -10,7 +10,8 @@ describe 'Weather API based on JSON 1.0 spec' do
       current_summary = JSON.parse(response.body, symbolize_names: true)[:data][:attributes][:current_weather_summary]
 
       expect(current_summary).to be_a Hash
-      expect(current_summary.keys).to eq([:icon,
+      expect(current_summary.keys).to eq([:id,
+                                          :icon,
                                           :description,
                                           :temp_current,
                                           :temp_hi,
@@ -31,7 +32,8 @@ describe 'Weather API based on JSON 1.0 spec' do
       current_detailed = JSON.parse(response.body, symbolize_names: true)[:data][:attributes][:current_weather_detail]
 
       expect(current_detailed).to be_a Hash
-      expect(current_detailed.keys).to eq([ :icon,
+      expect(current_detailed.keys).to eq([ :id,
+                                            :icon,
                                             :description,
                                             :today,
                                             :tonight,
@@ -42,16 +44,32 @@ describe 'Weather API based on JSON 1.0 spec' do
                                             :uv_category])
     end
 
+    it 'sends a forecast for the next 8 hours' do
+      get '/api/v1/forecast?location=denver,co'
+
+      expect(response).to be_successful
+
+      forecast_hourly = JSON.parse(response.body, symbolize_names: true)[:data][:attributes][:forecast_hourly]
+
+      expect(forecast_hourly).to be_a Hash
+      expect(forecast_hourly.keys).to eq([:hour_1, :hour_2, :hour_3, :hour_4, :hour_5, :hour_6, :hour_7, :hour_8])
+      expect(forecast_hourly[:hour_1].keys).to eq([ :id,
+                                                  :time_short,
+                                                  :icon,
+                                                  :temperature])
+    end
+
     it 'sends a forecast for the next 7 days' do
       get '/api/v1/forecast?location=denver,co'
 
       expect(response).to be_successful
 
-      forecast = JSON.parse(response.body, symbolize_names: true)[:data][:attributes][:forecast]
+      forecast_daily = JSON.parse(response.body, symbolize_names: true)[:data][:attributes][:forecast_daily]
 
-      expect(forecast).to be_a Hash
-      expect(forecast.keys).to eq([:day_1, :day_2, :day_3, :day_4, :day_5, :day_6, :day_7])
-      expect(forecast[:day_1].keys).to eq([ :icon,
+      expect(forecast_daily).to be_a Hash
+      expect(forecast_daily.keys).to eq([:day_1, :day_2, :day_3, :day_4, :day_5, :day_6, :day_7])
+      expect(forecast_daily[:day_1].keys).to eq([ :id,
+                                            :icon,
                                             :summary,
                                             :precip_type,
                                             :precip_probability,

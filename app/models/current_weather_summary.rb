@@ -1,5 +1,6 @@
 class CurrentWeatherSummary
-  attr_reader :icon,
+  attr_reader :id,
+              :icon,
               :description,
               :temp_current,
               :temp_hi,
@@ -12,6 +13,7 @@ class CurrentWeatherSummary
               :time_short
 
   def initialize(data_current, data_daily, geocode)
+    @id = nil
     @icon = data_current[:icon]
     @description = data_current[:summary]
     @temp_current = data_current[:temperature].round(0)

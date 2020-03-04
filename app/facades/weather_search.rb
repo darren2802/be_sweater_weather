@@ -1,10 +1,11 @@
 class WeatherSearch
-  def initialize(location)
-    @geocode = GoogleMapsService.geocode(location)
-    coordinates = geocode[:geometry][:location]
-    @weather_data = DarkSkyService.weather_info(coordinates)
+  attr_reader :id
 
-    forecast = forecast()
+  def initialize(location)
+    @id = nil
+    @geocode = GoogleMapsService.geocode(location)
+    coordinates = @geocode[:geometry][:location]
+    @weather_data = DarkSkyService.weather_info(coordinates)
   end
 
   def current_weather_summary
@@ -20,6 +21,18 @@ class WeatherSearch
       @weather_data[:currently],
       @weather_data[:daily]
     )
+  end
+
+  def forecast_hourly
+    forecast_hash = Hash.new()
+
+    8.times do |i|
+      hash_key = ('hour_' + (i + 1).to_s).to_sym
+      hourly_data = @weather_data[:hourly][:data][i + 1]
+      forecast_hash[hash_key] = ForecastHourly.new(hourly_data)
+    end
+
+    forecast_hash
   end
 
   def forecast_daily
