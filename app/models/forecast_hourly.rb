@@ -6,7 +6,7 @@ class ForecastHourly
 
   def initialize(hourly_data)
     @id = nil
-    @time_short = Time.at(hourly_data[:time]).strftime('%e %p')
+    @time_short = Time.at(hourly_data[:time]).strftime('%l %p')
     @icon = hourly_data[:icon]
     @temperature = hourly_data[:temperature]
   end
