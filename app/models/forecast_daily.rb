@@ -15,11 +15,15 @@ class ForecastDaily
     @icon = daily_data[:icon]
     @summary = daily_data[:summary]
     @precip_type = daily_data[:precipType]
-    @precip_probability = (daily_data[:precipProbability] * 100).round(0).to_s + '%'
-    @temp_avg = ((daily_data[:temperatureHigh] + daily_data[:temperatureLow]) / 2).round(0)
-    @temp_low = (daily_data[:temperatureLow]).round(0)
-    @temp_high = (daily_data[:temperatureHigh]).round(0)
-    @humidity = (daily_data[:humidity] * 100).round(0).to_s + '%'
+    @precip_probability = round_temp(daily_data[:precipProbability] * 100).to_s + '%'
+    @temp_avg = round_temp((daily_data[:temperatureHigh] + daily_data[:temperatureLow]) / 2)
+    @temp_low = round_temp(daily_data[:temperatureLow])
+    @temp_high = round_temp(daily_data[:temperatureHigh])
+    @humidity = round_temp(daily_data[:humidity] * 100).to_s + '%'
     @weekday = Time.at(daily_data[:time]).strftime('%A')
+  end
+
+  def round_temp(temp)
+    temp.round(0)
   end
 end
