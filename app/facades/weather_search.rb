@@ -67,6 +67,7 @@ class WeatherSearch
 
   def forecast(data_daily)
     forecast_hash = Hash.new
+  require "pry"; binding.pry
     7.times do |i|
       hash_key = ('day_' + (i + 1).to_s).to_sym
       forecast_hash[hash_key] = {
@@ -77,7 +78,8 @@ class WeatherSearch
         temp_avg: ((data_daily[i + 1][:temperatureHigh] + data_daily[i + 1][:temperatureLow]) / 2).round(0),
         temp_low: (data_daily[i + 1][:temperatureLow]).round(0),
         temp_high: (data_daily[i + 1][:temperatureHigh]).round(0),
-        humidity: (data_daily[i + 1][:humidity] * 100).round(0).to_s + '%'
+        humidity: (data_daily[i + 1][:humidity] * 100).round(0).to_s + '%',
+        weekday: Time.at(data_daily[i + 1][:time]).strftime('%A')
       }
     end
 
